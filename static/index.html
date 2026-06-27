@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Job Search Agent</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,900&family=Hanken+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+<div class="wrap">
+    <header>
+        <div>
+            <h1>Job&nbsp;Search&nbsp;Agent</h1>
+            <div class="sub">Live view of your saved roles. <b>Claude finds &amp; saves</b> via the agent; you manage them here. Edits sync to the database and CSV.</div>
+        </div>
+        <div class="stats" id="stats"></div>
+    </header>
+
+    <div class="toolbar">
+        <input class="search" id="search" placeholder="Filter by title, company, location, status…"/>
+        <button class="btn primary" onclick="openAdd()">+ Add job manually</button>
+    </div>
+    <div class="tabs">
+        <button class="tab active" id="tab-shortlist" onclick="setTab('shortlist')">Shortlist <span class="cnt" id="cnt-shortlist">0</span></button>
+        <button class="tab" id="tab-scheduled" onclick="setTab('scheduled')">Scheduled <span class="cnt" id="cnt-scheduled">0</span></button>
+        <button class="tab" id="tab-review" onclick="setTab('review')">In Review <span class="cnt" id="cnt-review">0</span></button>
+        <button class="tab" id="tab-applications" onclick="setTab('applications')">Applications <span class="cnt" id="cnt-applications">0</span></button>
+    </div>
+
+    <table>
+        <thead><tr>
+            <th style="width:120px">Match</th><th>Role</th><th style="width:150px">Location</th>
+            <th style="width:96px">Posted</th><th style="width:130px">Status</th>
+            <th style="width:220px">Note</th><th style="width:120px"></th>
+        </tr></thead>
+        <tbody id="rows"></tbody>
+    </table>
+    <div class="empty" id="empty" style="display:none">No jobs yet. Ask Claude to save some, or add one manually.</div>
+</div>
+
+<div class="scrim" id="scrim">
+    <div class="modal">
+        <h2>Add a job</h2>
+        <label>Title*</label><input id="f-title"/>
+        <label>Company*</label><input id="f-company"/>
+        <label>Location</label><input id="f-location"/>
+        <label>URL</label><input id="f-url"/>
+        <label>Note</label><input id="f-note"/>
+        <div class="actions">
+            <button class="btn ghost" onclick="closeAdd()">Cancel</button>
+            <button class="btn primary" onclick="submitAdd()">Save</button>
+        </div>
+    </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script src="/static/app.js"></script>
+</body>
+</html>

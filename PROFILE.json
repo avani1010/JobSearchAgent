@@ -1,0 +1,13 @@
+{
+  "summary": "Backend software engineer, 3 years at IG Group (fintech), now completing an MSc in Advanced AI at UCD. Backend engineer wants to pivot into AI/GenAI/ML/Applied AI roles leveraging current masters.",
+  "years_experience": 3,
+  "current_skills": ["Python", "Java", "Spring Boot", "FastAPI", "Docker", "Kubernetes", "AWS", "CI/CD", "Kafka", "SQL", "PyTorch", "Hugging Face", "RAG", "Retrieval Augumented Generation","LoRA fine-tuning", "LLM APIs", "embeddings", "RAGAS", "Agentic AI"],
+  "target_roles": ["AI/ML Engineer", "ML Engineer", "AI Engineer","GenAI Engineer", "LLM Engineer", "Backend Engineer with ML focus", "Applied AI Engineer", "AI Research Engineer"],
+  "location": "Dublin, Ireland",
+  "constraints": {
+    "seniority_floor": "junior to mid-level",
+    "seniority_ceiling": "not lead/principal/staff roles requiring 8+ years",
+    "needs_visa_sponsorship": false,
+    "avoid": ["pure management", "non-engineering", "10+ years senior roles"]
+  }
+}
