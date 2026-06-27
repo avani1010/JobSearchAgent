@@ -74,7 +74,7 @@ class NewJob(BaseModel):
 def list_jobs():
     conn = connect()
     try:
-        rows = conn.execute(f"SELECT {', '.join(COLUMNS)} FROM jobs ORDER BY saved_at DESC").fetchall()
+        rows = conn.execute(f"SELECT {', '.join(COLUMNS)} FROM jobs WHERE dismissed=0 ORDER BY saved_at DESC").fetchall()
         jds = dict(conn.execute("SELECT id, description FROM jd").fetchall())
     finally:
         conn.close()
@@ -120,13 +120,13 @@ def add_job(job: NewJob):
 def delete_job(job_id: str):
     conn = connect()
     try:
-        conn.execute("DELETE FROM jobs WHERE id=?", (job_id,))
-        conn.execute("DELETE FROM jd WHERE id=?", (job_id,))
+        now = datetime.now(timezone.utc).isoformat(timespec="seconds")
+        conn.execute("UPDATE jobs SET dismissed=1, updated_at=? WHERE id=?", (now, job_id))
         conn.commit()
         export_csv(conn)
     finally:
         conn.close()
-    return {"deleted": job_id}
+    return {"dismissed": job_id}
 
 
 @app.get("/api/jobs/{job_id}/jd")

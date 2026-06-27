@@ -18,7 +18,7 @@ CSV_PATH = DB_DIR / "jobs.csv"
 
 # jobs.description holds only the SHORT snippet; the full JD lives in the jd table.
 COLUMNS = ["id", "title", "company", "location", "url", "posted",
-           "status", "note", "saved_at", "updated_at", "description","source"]
+           "status", "note", "saved_at", "updated_at", "description","source","dismissed"]
 CSV_COLUMNS = COLUMNS              # snippet is small; trim here if you want a leaner CSV
 STATUSES = ["saved", "in_review", "applied", "interview", "offer", "rejected"]
 
@@ -33,6 +33,8 @@ def _connect() -> sqlite3.Connection:
     cols = {r[1] for r in conn.execute("PRAGMA table_info(jobs)")}
     if "source" not in cols:
         conn.execute("ALTER TABLE jobs ADD COLUMN source TEXT DEFAULT ''")
+    if "dismissed" not in cols:
+        conn.execute("ALTER TABLE jobs ADD COLUMN dismissed INTEGER DEFAULT 0")
     conn.execute("CREATE TABLE IF NOT EXISTS jd (id TEXT PRIMARY KEY, description TEXT)")
     return conn
 
