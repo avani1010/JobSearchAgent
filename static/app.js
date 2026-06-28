@@ -78,13 +78,13 @@ function render(){
         ${j.url ? `<a class="icon" href="${esc(j.url)}" target="_blank" rel="noopener">View ↗</a>` : ''}
         <button class="icon opt" onclick="optimise('${j.id}')">Tailor CV</button>
         <button class="icon" onclick="copyJD('${j.id}')">Copy JD</button>
-        <button class="icon del" title="Delete" aria-label="Delete"
-                onclick="removeJob('${j.id}','${esc(j.title).replace(/'/g,"\\'")}')">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-               stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m2 0v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/>
-            <line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/>
-          </svg>
+        <button class="icon del" title="Dismiss" aria-label="Dismiss"
+          onclick="removeJob('${j.id}','${esc(j.title).replace(/'/g,"\\'")}')">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line>
+            </svg>
         </button>
       </div></td>`;
         tb.appendChild(tr);
@@ -92,12 +92,12 @@ function render(){
 }
 
 async function removeJob(id, title){
-    if(!confirm('Delete "' + title + '" from the tracker? This cannot be undone.')) return;
+    if(!confirm('Dismiss "' + title + '" from the tracker? This cannot be undone.')) return;
     const r = await fetch('/api/jobs/' + id, {method:'DELETE'});
-    if(!r.ok){ toast('Delete failed'); return; }
+    if(!r.ok){ toast('Dimiss failed'); return; }
     JOBS = JOBS.filter(j => j.id !== id);
     render();
-    toast('Deleted — ' + title);
+    toast('Dismissed — ' + title);
 }
 
 async function copyJD(id){
