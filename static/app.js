@@ -92,7 +92,6 @@ function render(){
 }
 
 async function removeJob(id, title){
-    if(!confirm('Dismiss "' + title + '" from the tracker? This cannot be undone.')) return;
     const r = await fetch('/api/jobs/' + id, {method:'DELETE'});
     if(!r.ok){ toast('Dimiss failed'); return; }
     JOBS = JOBS.filter(j => j.id !== id);

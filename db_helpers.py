@@ -81,7 +81,7 @@ def make_id(job_id: str = "", url: str = "", title: str = "", company: str = "")
 
 def save_job_row(title: str, company: str, url: str = "", location: str = "",
                  job_id: str = "", posted: str = "", description: str = "",
-                 note: str = "", status: str = "saved",source="") -> dict:
+                 note: str = "", status: str = "saved",source="", dismissed = 0) -> dict:
     """Insert a job if new (dedupe on id), refresh the CSV, return a result dict.
     Shared by the MCP save_job tool, the UI add-job endpoint, and the scheduler."""
     jid = make_id(job_id, url, title, company)
@@ -93,7 +93,7 @@ def save_job_row(title: str, company: str, url: str = "", location: str = "",
             return {"status": "already_saved", "id": jid, "existing_status": existing["status"]}
         conn.execute(
             f"INSERT INTO jobs ({', '.join(COLUMNS)}) VALUES ({', '.join(['?']*len(COLUMNS))})",
-            (jid, title, company, location, url, posted, status, note, now, now, description,source),
+            (jid, title, company, location, url, posted, status, note, now, now, description,source,dismissed),
         )
         conn.commit()
         _export_csv(conn)
