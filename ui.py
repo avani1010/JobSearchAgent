@@ -105,7 +105,13 @@ def update_job(job_id: str, upd: JobUpdate):
 
 @app.post("/api/jobs")
 def add_job(job: NewJob):
-    r = save_job_row(job.title, job.company, job.url, job.location, note=job.note, source="manual")
+    r = save_job_row(
+        title=job.title,
+        company=job.company,
+        location=job.location,
+        url=job.url,
+        note=job.note,
+        source="manual"    )
     if r["status"] == "already_saved":
         raise HTTPException(409, "Looks like that job is already tracked.")
     conn = connect()
